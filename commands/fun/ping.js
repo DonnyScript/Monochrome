@@ -6,7 +6,7 @@ module.exports = {
 	category: 'fun',
 	data: new SlashCommandBuilder()
 		.setName('snitch')
-		.setDescription('wanna know something?'),
+		.setDescription('Want to know something?'),
 	async execute(interaction) {
 		const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 		let name = interaction.member.user.globalName;

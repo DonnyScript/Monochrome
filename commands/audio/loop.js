@@ -1,5 +1,6 @@
 const {SlashCommandBuilder } = require('discord.js');
 const { useQueue } = require("discord-player");
+let choices = [];
 
 
 module.exports = {
@@ -14,7 +15,6 @@ module.exports = {
                 .setRequired(true)),
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
-        let choices = [];
 
         if (focusedOption.name === 'options') {
             choices = ['Off','Track','Queue','Autoplay'];
@@ -27,7 +27,17 @@ module.exports = {
     },
     async execute(interaction) {
         try {
+            let name = interaction.member.user.globalName;
+            let response = interaction.options.getString('options')
+            console.log(choices.includes(response));
+            if(!choices.includes(response)){
+                await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                await wait(5000);
+                await interaction.deleteReply();
+                return;
+            }
             const option = interaction.options.getString('options').toLowerCase();
+            console.log(option);
             const queue = useQueue(interaction.guild.id);
             switch (option) {
                 case 'off': 

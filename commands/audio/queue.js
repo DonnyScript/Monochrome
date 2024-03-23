@@ -1,7 +1,7 @@
 const { useQueue } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const wait = require('util').promisify(setTimeout);
-const { EmbedBuilder } = require('discord.js');
+let choices = [];
 
 module.exports = {
     category: 'audio',
@@ -27,6 +27,14 @@ module.exports = {
     async execute(interaction) {
         const queue = useQueue(interaction.guild.id);
         const option = interaction.options.getString('option').toLowerCase();
+        const userQuery = interaction.options.getString('option');
+
+        if(!choices.includes(userQuery)){
+            await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+            await wait(5000);
+            await interaction.deleteReply();
+            return;
+        }
         switch (option) {
             case 'display':
             try {

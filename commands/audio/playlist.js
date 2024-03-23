@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const YouTube = require("youtube-sr").default;
 const userDataPath = path.join(__dirname, '..', '..', 'userdata', 'playlists.json');
-const { useMainPlayer,useQueue } = require('discord-player');
+const { useMainPlayer } = require('discord-player');
 const wait = require('util').promisify(setTimeout);
 
 
@@ -52,31 +52,52 @@ module.exports = {
             const data = interaction.options.getString('value');
             const playlistName = interaction.options.getString('playlist');
             const channel = interaction.member.voice.channel;
+            let name = interaction.member.user.globalName;
 
             switch (option) {
                 case 'add song': 
                 try {
-                    let url = data;
-                    let videoUrl = await YouTube.search(url)
+                    if(data == null || playlistName == null){
+                        await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                        await wait(5000);
+                        await interaction.deleteReply();
+                        return;
+                    }
 
-                    addLinkToPlaylist(playlistName, videoUrl[0].url);
-                    await interaction.reply(`Adding: ${videoUrl[0].title} to ${playlistName}`);
+                    const result = await player.search(data, {fallbackSearchEngine:'auto'});
+
+                    addLinkToPlaylist(playlistName, result._data.tracks[0].url);
+                    await interaction.reply(`Adding: ${result._data.tracks[0].title} to ${playlistName}`);
                     await wait(25000);
                     await interaction.deleteReply();
+
                 } catch (error) {
                     await interaction.reply(`Can not add song because: ${error}`)
                 }
                     break;
     
                 case 'create':
+                    if(data == null){
+                        await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                        await wait(5000);
+                        await interaction.deleteReply();
+                        return;
+                    }
+
                     createPlaylist(data);
                     await interaction.reply(`Creating a new playlist: ${data}`);
                     await wait(25000);
                     await interaction.deleteReply();
+
                     break;
     
                 case 'delete song':
                     const specificPlaylist = playlists.find(p => p.name === playlistName);
+
+                    if(specificPlaylist == null){
+                        await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                        return;
+                    }
                     const selectOptions = specificPlaylist.links.map(playlistTitle => {
                         return new StringSelectMenuOptionBuilder()
                             .setLabel(playlistTitle.title)
@@ -97,20 +118,27 @@ module.exports = {
                     });
     
                     const collectorFilter = i => i.user.id === interaction.user.id;
+
                     try {
                         const confirmation = await interaction.channel.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
-                        console.log(confirmation.values[0]);
                         deleteFromPlaylist(confirmation.values[0], playlistName);
-    
                         await confirmation.reply(`Deleted link with title "${confirmation.values[0]}" from playlist "${playlistName}".`);
                     } catch (error) {
                         await interaction.reply(`Error collecting: ${error}`);
                     }
+
                     break;
     
                 case 'display':
                     const playlist = playlists.find(p => p.name === playlistName);
-    
+
+                    if(playlist == null){
+                        await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                        await wait(5000);
+                        await interaction.deleteReply();
+                        return;
+                    }
+
                     if (playlist && Array.isArray(playlist.links) && playlist.links.length > 0) {
                         let playlistTracks = await displayPlaylist(playlistName, playlists);
                         await interaction.reply(playlistTracks);
@@ -121,11 +149,20 @@ module.exports = {
                         await wait(25000);
                         await interaction.deleteReply();
                     }
+
                     break;
                 case 'play':
                     try {
                         let playlistQueue = [];
                         const specificPlaylist = playlists.find(p => p.name === playlistName);
+
+                        if(specificPlaylist == null){
+                            await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                            await wait(5000);
+                            await interaction.deleteReply();
+                            return;
+                        }
+
                         specificPlaylist.links.forEach(async (link) => {
                             playlistQueue.push(link);
                           });
@@ -135,11 +172,13 @@ module.exports = {
                           playlistQueue.forEach(async (link) => {
                             await player.play(channel,link.url)
                           });
+
                         await interaction.reply(`Added playlist: ${specificPlaylist.name} to the queue`)
                         await wait(25000);
                         await interaction.deleteReply();
-                    } catch (error) {
 
+                    } catch (error) {
+                        await interaction.reply('Error in playing the playlist');
                     }
                 break;
             }
