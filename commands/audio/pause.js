@@ -15,10 +15,10 @@ module.exports = {
             await interaction.reply(`Can you hear me?`);
             await wait(10000);
             await interaction.deleteReply();
+
         } catch (error) {
             await interaction.reply(`Error pausing track`);
             console.log(error);
-
         }
      } 
 };

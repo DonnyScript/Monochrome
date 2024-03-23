@@ -29,16 +29,18 @@ module.exports = {
         try {
             let name = interaction.member.user.globalName;
             let response = interaction.options.getString('options')
+            const option = interaction.options.getString('options').toLowerCase();
             console.log(choices.includes(response));
+
             if(!choices.includes(response)){
                 await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
                 await wait(5000);
                 await interaction.deleteReply();
                 return;
             }
-            const option = interaction.options.getString('options').toLowerCase();
-            console.log(option);
+            
             const queue = useQueue(interaction.guild.id);
+
             switch (option) {
                 case 'off': 
                 try {
@@ -64,6 +66,7 @@ module.exports = {
                     await interaction.reply(`Playing related songs automatically based on your existing queue`);
                     break;
             }
+            
         } catch (error) {
             await interaction.reply(`Error in playlist block: ${error}`);
         }

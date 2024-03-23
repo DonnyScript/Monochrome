@@ -26,8 +26,8 @@ module.exports = {
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         const query = interaction.options.getString('input', true);
-        if (!channel) return interaction.reply('You are not connected to a voice channel!');
 
+        if (!channel) return interaction.reply('You are not connected to a voice channel!');
 
         try {
             const { track } = await player.play(channel, query, { nodeOptions: {
@@ -43,6 +43,7 @@ module.exports = {
                 .setThumbnail(`${track.thumbnail}`)
                 .setAuthor({ name: `${interaction.user.globalName} played: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
                 .setTimestamp();
+                
             await interaction.followUp({ embeds: [trackEmbed] });
             await wait(25000);
             await interaction.deleteReply();
