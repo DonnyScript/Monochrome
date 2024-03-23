@@ -12,7 +12,6 @@ const excludedExtractors = [
     'AppleMusicExtractor',
     'SpotifyExtractor',
 ];
-
 module.exports = {
     category: 'audio',
     data: new SlashCommandBuilder()
@@ -57,7 +56,7 @@ module.exports = {
                     .setTitle(`${track.title}`)
                     .setURL(`${track.url}`)
                     .setThumbnail(`${track.thumbnail}`)
-                    .setAuthor({ name: `${interaction.user.globalName} played: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
+                    .setAuthor({ name: `${interaction.user.globalName}s remix: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
                     .setTimestamp();
 
                 await interaction.followUp({ embeds: [trackEmbed] });

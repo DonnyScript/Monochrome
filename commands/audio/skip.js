@@ -5,7 +5,7 @@ const wait = require('util').promisify(setTimeout);
 module.exports = {
     category: 'audio',
     data: new SlashCommandBuilder()
-        .setName('skip')
+        .setName('skip') //Make this skip to a part in the song
         .setDescription('Skips current track playing'),
     async execute(interaction) {
         try{
