@@ -1,5 +1,6 @@
 const { useQueue } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const wait = require('util').promisify(setTimeout);
 
 module.exports = {
     category: 'audio',
@@ -25,16 +26,24 @@ module.exports = {
     async execute(interaction) {
         const option = interaction.options.getString('option').toLowerCase();
         switch (option) {
-            case 'display': 
+            case 'display':
             try {
                 const queue = useQueue(interaction.guild.id);
+                if (queue == null) {
+                    await interaction.reply("Queue is empty");
+                    await wait(10000);
+                    await interaction.deleteReply();
+                    break;
+                }
                 const tracks = queue.tracks.toArray();
                 let currentQueue = `Current queue:\n- ${queue.currentTrack} \n`;
                 tracks.forEach((title) => {
                     currentQueue += `- ${title} \n`;
                 }
                 )
-                interaction.reply(currentQueue);
+                await interaction.reply(currentQueue);
+                await wait(10000);
+                await interaction.deleteReply();
             } catch (error) {
                 await interaction.reply(`Can not display that playlist: ${error}`)
             }
@@ -44,6 +53,8 @@ module.exports = {
                     const queue = useQueue(interaction.guild.id);
                     queue.toggleShuffle(false);
                     await interaction.reply('Shuffling queue');
+                    await wait(10000);
+                    await interaction.deleteReply();
                 } catch (error) {
                     await interaction.reply(`Error shuffling queue:`);
                     console.log(error);

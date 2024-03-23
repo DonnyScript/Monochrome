@@ -29,7 +29,6 @@ module.exports = {
         try {
             const option = interaction.options.getString('options').toLowerCase();
             const queue = useQueue(interaction.guild.id);
-    
             switch (option) {
                 case 'off': 
                 try {
@@ -42,17 +41,17 @@ module.exports = {
     
                 case 'track':
                     queue.setRepeatMode(1); 
-                    await interaction.reply(`Loops the current track`);
+                    await interaction.reply(`Looping the current track`);
                     break;
     
                 case 'queue':
                     queue.setRepeatMode(2); 
-                    await interaction.reply(`Loops the current queue`);
+                    await interaction.reply(`Looping the current queue`);
                     break;
     
                 case 'autoplay':
                     queue.setRepeatMode(3);
-                    await interaction.reply(`Play related songs automatically based on your existing queue`);
+                    await interaction.reply(`Playing related songs automatically based on your existing queue`);
                     break;
             }
         } catch (error) {

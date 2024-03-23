@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
-
 let urlPath = './../../DiscordBot/Monochrome/userdata/userURLs.json';
 let userURLs = new Map();
+const wait = require('util').promisify(setTimeout);
 
 try {
     const data = fs.readFileSync(urlPath);
@@ -34,7 +34,9 @@ module.exports = {
         
         fs.writeFileSync(urlPath, JSON.stringify([...userURLs]));
         
-        return interaction.reply(`Your custom YouTube URL has been set to: ${query}`);
+        await interaction.reply(`Your custom YouTube URL has been set to: ${query}`);
+        await wait(3000);
+        await interaction.deleteReply();
         } catch (error) {
             await interaction.reply(`Error in setting intro: ${error}`);
         }

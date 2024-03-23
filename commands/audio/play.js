@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { useMainPlayer } = require('discord-player');
 const { EmbedBuilder } = require('discord.js');
+const wait = require('util').promisify(setTimeout);
 
 module.exports = {
     category: 'audio',
@@ -15,7 +16,6 @@ module.exports = {
     async execute(interaction) {
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
-        const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         const query = interaction.options.getString('input', true);
         if (!channel) return interaction.reply('You are not connected to a voice channel!');
 
@@ -25,7 +25,7 @@ module.exports = {
                 leaveOnEnd: false,
                 leaveOnStop:false,
             }});
-            
+
             const trackEmbed = new EmbedBuilder()
                 .setColor(0x707a7e)
                 .setTitle(`${track.title}`)

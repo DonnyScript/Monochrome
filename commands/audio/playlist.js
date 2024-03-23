@@ -3,7 +3,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const YouTube = require("youtube-sr").default;
 const userDataPath = path.join(__dirname, '..', '..', 'userdata', 'playlists.json');
-const { useMainPlayer } = require('discord-player');
+const { useMainPlayer,useQueue } = require('discord-player');
+const wait = require('util').promisify(setTimeout);
 
 
 module.exports = {
@@ -30,7 +31,7 @@ module.exports = {
         let choices = [];
 
         if (focusedOption.name === 'option') {
-            choices = ['Add Song', 'Create', 'Delete Song', 'Display', 'play'];
+            choices = ['Add Song', 'Create', 'Delete Song', 'Display', 'Play'];
         }
 
         if (focusedOption.name === 'playlist') {
@@ -60,6 +61,8 @@ module.exports = {
 
                     addLinkToPlaylist(playlistName, videoUrl[0].url);
                     await interaction.reply(`Adding: ${videoUrl[0].title} to ${playlistName}`);
+                    await wait(25000);
+                    await interaction.deleteReply();
                 } catch (error) {
                     await interaction.reply(`Can not add song because: ${error}`)
                 }
@@ -68,6 +71,8 @@ module.exports = {
                 case 'create':
                     createPlaylist(data);
                     await interaction.reply(`Creating a new playlist: ${data}`);
+                    await wait(25000);
+                    await interaction.deleteReply();
                     break;
     
                 case 'delete song':
@@ -107,19 +112,32 @@ module.exports = {
                     const playlist = playlists.find(p => p.name === playlistName);
     
                     if (playlist && Array.isArray(playlist.links) && playlist.links.length > 0) {
-                        let test = await displayPlaylist(playlistName, playlists);
-                        await interaction.reply(test);
+                        let playlistTracks = await displayPlaylist(playlistName, playlists);
+                        await interaction.reply(playlistTracks);
+                        await wait(25000);
+                        await interaction.deleteReply();
                     } else {
                         await interaction.reply(`Playlist: ${playlistName} has no links.`);
+                        await wait(25000);
+                        await interaction.deleteReply();
                     }
                     break;
                 case 'play':
                     try {
+                        let playlistQueue = [];
                         const specificPlaylist = playlists.find(p => p.name === playlistName);
                         specificPlaylist.links.forEach(async (link) => {
-                            const {track } = await player.play(channel,link.url)
+                            playlistQueue.push(link);
+                          });
+
+                          shuffle(playlistQueue);
+
+                          playlistQueue.forEach(async (link) => {
+                            await player.play(channel,link.url)
                           });
                         await interaction.reply(`Added playlist: ${specificPlaylist.name} to the queue`)
+                        await wait(25000);
+                        await interaction.deleteReply();
                     } catch (error) {
 
                     }
@@ -269,3 +287,16 @@ async function createPlaylist(playlistName) {
         console.error(`Error creating playlist "${playlistName}":`, error);
     }
 }
+
+function shuffle(array) {
+    var m = array.length, t, i;
+  
+    while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+  
+    return array;
+  }

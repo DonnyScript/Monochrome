@@ -1,5 +1,6 @@
 const { useHistory } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const wait = require('util').promisify(setTimeout);
 
 module.exports = {
     category: 'audio',
@@ -10,10 +11,16 @@ module.exports = {
         try{
             const history = useHistory(interaction.guild.id);
             if(history.isEmpty()){
-                return await interaction.reply("Nothing to go back to");
+                await interaction.reply("Nothing to go back to");
+                await wait(10000);
+                await interaction.deleteReply();
+                return;
             }
             await history.previous();
-            return await interaction.reply("Playing previous track");
+            await interaction.reply("Playing previous track");
+            await wait(10000);
+            await interaction.deleteReply();
+            return;
         } catch (error) {
             await interaction.reply(`Error skipping track`);
             console.log(error)

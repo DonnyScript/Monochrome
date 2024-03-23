@@ -1,5 +1,6 @@
 const { useQueue,GuildQueuePlayerNode } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const wait = require('util').promisify(setTimeout);
 
 module.exports = {
     category: 'audio',
@@ -11,7 +12,9 @@ module.exports = {
             const queue = useQueue(interaction.guild.id);
             let guildQueue = new GuildQueuePlayerNode(queue);
             guildQueue.skip();
-            return await interaction.reply("Skipping track");
+            await interaction.reply("Skipping track");
+            await wait(10000);
+            await interaction.deleteReply();
         } catch (error) {
             await interaction.reply(`Error skipping track: ${error}`);
         }
