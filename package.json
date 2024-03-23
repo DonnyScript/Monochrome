@@ -1,0 +1,25 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Don",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^1.7.0",
+    "@discordjs/rest": "^2.2.0",
+    "@discordjs/voice": "^0.16.1",
+    "@sapphire/framework": "^5.0.7",
+    "discord-player": "^6.6.7",
+    "discord.js": "^14.14.1",
+    "mediaplex": "^0.0.9",
+    "play-dl": "^1.9.7",
+    "tweetnacl": "^1.0.3",
+    "youtube-sr": "^4.3.10",
+    "ytdl-core": "^4.11.5"
+  },
+  "description": ""
+}
