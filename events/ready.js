@@ -7,7 +7,17 @@ module.exports = {
 	async execute(client) {
 		const player = useMainPlayer();
 		console.log(`Ready! Logged in as ${client.user.tag}`);
-		await player.extractors.loadDefault();
+		const excludedExtractors = [ 
+			'VimeoExtractor',
+			'SoundCloudExtractor',
+			'ReverbnationExtractor',
+			'BridgedExtractor',
+			'AttachmentExtractor',
+			'AppleMusicExtractor'
+		];
+
+		await player.extractors.loadDefault((ext) => !excludedExtractors.includes(ext));
+
 
 	},
 };

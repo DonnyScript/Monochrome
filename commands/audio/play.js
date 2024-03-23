@@ -2,7 +2,15 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { useMainPlayer } = require('discord-player');
 const { EmbedBuilder } = require('discord.js');
 const wait = require('util').promisify(setTimeout);
-
+const excludedExtractors = [ 
+    'VimeoExtractor',
+    'SoundCloudExtractor',
+    'ReverbnationExtractor',
+    'BridgedExtractor',
+    'AttachmentExtractor',
+    'AppleMusicExtractor',
+    'SpotifyExtractor',
+];
 module.exports = {
     category: 'audio',
     data: new SlashCommandBuilder()
@@ -14,17 +22,19 @@ module.exports = {
                 .setDescription('Put YouTube video URL here')
                 .setRequired(true)),
     async execute(interaction) {
+        await interaction.deferReply();
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         const query = interaction.options.getString('input', true);
         if (!channel) return interaction.reply('You are not connected to a voice channel!');
+
 
         try {
             const { track } = await player.play(channel, query, { nodeOptions: {
                 leaveOnEmpty: false,
                 leaveOnEnd: false,
                 leaveOnStop:false,
-            }});
+            },blockExtractors : {excludedExtractors} });
 
             const trackEmbed = new EmbedBuilder()
                 .setColor(0x707a7e)
@@ -33,8 +43,8 @@ module.exports = {
                 .setThumbnail(`${track.thumbnail}`)
                 .setAuthor({ name: `${interaction.user.globalName} played: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
                 .setTimestamp();
-            await interaction.reply({ embeds: [trackEmbed] });
-            await wait(25000);
+            await interaction.followUp({ embeds: [trackEmbed] });
+            await wait(5000);
             await interaction.deleteReply();
             
         } catch (error) {

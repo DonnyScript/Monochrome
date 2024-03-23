@@ -21,6 +21,5 @@
     "youtube-sr": "^4.3.10",
     "ytdl-core": "^4.11.5"
   },
-  "devDependencies": {},
   "description": ""
 }

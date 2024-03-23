@@ -15,7 +15,7 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === 'option') {
-            choices = ['Display', 'Shuffle'];
+            choices = ['Display', 'Shuffle', 'Clear'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -24,11 +24,11 @@ module.exports = {
         );
     },
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
         const option = interaction.options.getString('option').toLowerCase();
         switch (option) {
             case 'display':
             try {
-                const queue = useQueue(interaction.guild.id);
                 if (queue == null) {
                     await interaction.reply("Queue is empty");
                     await wait(10000);
@@ -48,9 +48,9 @@ module.exports = {
                 await interaction.reply(`Can not display that playlist: ${error}`)
             }
             break;
+
             case 'shuffle':
                 try{ 
-                    const queue = useQueue(interaction.guild.id);
                     queue.toggleShuffle(false);
                     await interaction.reply('Shuffling queue');
                     await wait(10000);
@@ -59,7 +59,25 @@ module.exports = {
                     await interaction.reply(`Error shuffling queue:`);
                     console.log(error);
                 }
-        break;
+            break;
+
+            case 'clear':
+                try {
+                    if (queue == null) {
+                        await interaction.reply("Nothing to clear");
+                        await wait(10000);
+                        await interaction.deleteReply();
+                        break;
+                    }
+                    queue.clear();
+                    await interaction.reply("Queue is cleared");
+                    await wait(10000);
+                    await interaction.deleteReply();
+                }catch (error) {
+                    await interaction.reply("Can not clear that queue")
+                }
+
+            break;
         }
     }
 };
