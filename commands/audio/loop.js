@@ -10,7 +10,7 @@ module.exports = {
         .addStringOption(option =>
             option.setName('options')
                 .setAutocomplete(true)
-                .setDescription('Playlist Action')
+                .setDescription('Do WHAT to the queu???')
                 .setRequired(true)),
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);

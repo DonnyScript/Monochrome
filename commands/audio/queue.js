@@ -1,6 +1,7 @@
 const { useQueue } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const wait = require('util').promisify(setTimeout);
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     category: 'audio',
@@ -15,7 +16,7 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === 'option') {
-            choices = ['Display', 'Shuffle', 'Clear'];
+            choices = ['Display', 'Shuffle', 'Clear','Playing'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -51,6 +52,17 @@ module.exports = {
 
             case 'shuffle':
                 try{ 
+                    if (queue == null) {
+                        await interaction.reply("Nothing to shuffle");
+                        await wait(10000);
+                        await interaction.deleteReply();
+                        break;
+                    }else if (queue.currentTrack == null){
+                        await interaction.reply("Nothing to shuffle");
+                        await wait(15000);
+                        await interaction.deleteReply();
+                        break;
+                    }
                     queue.toggleShuffle(false);
                     await interaction.reply('Shuffling queue');
                     await wait(10000);
@@ -68,6 +80,11 @@ module.exports = {
                         await wait(10000);
                         await interaction.deleteReply();
                         break;
+                    } else if (queue.currentTrack == null){
+                        await interaction.reply("Nothing to clear");
+                        await wait(15000);
+                        await interaction.deleteReply();
+                        break;
                     }
                     queue.clear();
                     await interaction.reply("Queue is cleared");
@@ -76,6 +93,22 @@ module.exports = {
                 }catch (error) {
                     await interaction.reply("Can not clear that queue")
                 }
+            break;
+            case 'playing':
+                if (queue == null) {
+                    await interaction.reply("Nothing is playing");
+                    await wait(15000);
+                    await interaction.deleteReply();
+                    break;
+                } else if (queue.currentTrack == null){
+                    await interaction.reply("Nothing is playing");
+                    await wait(15000);
+                    await interaction.deleteReply();
+                    break;
+                }
+                await interaction.reply(`Current track: ${queue.currentTrack}`)
+                await wait(10000);
+                await interaction.deleteReply();
 
             break;
         }

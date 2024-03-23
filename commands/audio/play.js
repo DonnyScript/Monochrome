@@ -44,7 +44,7 @@ module.exports = {
                 .setAuthor({ name: `${interaction.user.globalName} played: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
                 .setTimestamp();
             await interaction.followUp({ embeds: [trackEmbed] });
-            await wait(5000);
+            await wait(25000);
             await interaction.deleteReply();
             
         } catch (error) {
