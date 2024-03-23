@@ -10,7 +10,7 @@ module.exports = {
         try{
             const queue = useQueue(interaction.guild.id);
             let guildQueue = new GuildQueuePlayerNode(queue);
-            let message = guildQueue.createProgressBar({ timecodes: true, length: 40, leftChar: '-', rightChar: '~', separator: ' ',indicator: '@', queue: true });
+            let message = guildQueue.createProgressBar({ timecodes: true, length: 40, leftChar: '-', rightChar: '-', separator: ' ',indicator: '@', queue: true });
             await interaction.reply(message);
         } catch (error) {
             await interaction.reply(`Error skipping track: ${error}`);

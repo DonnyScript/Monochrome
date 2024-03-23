@@ -15,10 +15,9 @@ module.exports = {
     async execute(interaction) {
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
-        if (!channel) return interaction.reply('You are not connected to a voice channel!');
+        const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         const query = interaction.options.getString('input', true);
-
-        await interaction.deferReply();
+        if (!channel) return interaction.reply('You are not connected to a voice channel!');
 
         try {
             const { track } = await player.play(channel, query, { nodeOptions: {
@@ -26,17 +25,16 @@ module.exports = {
                 leaveOnEnd: false,
                 leaveOnStop:false,
             }});
-            //Fix embed builder
             const exampleEmbed = new EmbedBuilder()
-                .setColor(0x0099FF)
+                .setColor(0x707a7e)
                 .setTitle(`${track.title}`)
                 .setURL(`${track.url}`)
-                .setDescription('Some description here')
-                .setThumbnail(  `${track.thumbnail}`)
-                .setTimestamp()
-                .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
-            console.log(exampleEmbed);
+                .setThumbnail(`${track.thumbnail}`)
+                .setAuthor({ name: `${interaction.user.globalName} played: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
+                .setTimestamp();
             await interaction.reply({ embeds: [exampleEmbed] });
+            await wait(25000);
+            await interaction.deleteReply();
             
         } catch (e) {
             return interaction.followUp(`Something went wrong: ${e}`);

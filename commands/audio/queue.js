@@ -15,7 +15,7 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === 'option') {
-            choices = ['Display'];
+            choices = ['Display', 'Shuffle'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -31,15 +31,25 @@ module.exports = {
                 const queue = useQueue(interaction.guild.id);
                 const tracks = queue.tracks.toArray();
                 let currentQueue = `Current queue:\n- ${queue.currentTrack} \n`;
-                tracks.forEach((title) =>
-                    currentQueue += `- ${title} \n`
+                tracks.forEach((title) => {
+                    currentQueue += `- ${title} \n`;
+                }
                 )
-                await interaction.reply(currentQueue);
+                interaction.reply(currentQueue);
             } catch (error) {
                 await interaction.reply(`Can not display that playlist: ${error}`)
             }
+            break;
+            case 'shuffle':
+                try{ 
+                    const queue = useQueue(interaction.guild.id);
+                    queue.toggleShuffle(false);
+                    await interaction.reply('Shuffling queue');
+                } catch (error) {
+                    await interaction.reply(`Error shuffling queue:`);
+                    console.log(error);
+                }
         break;
-
         }
     }
 };

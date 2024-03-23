@@ -5,11 +5,14 @@ const player = useMainPlayer();
 let userURLs;
 let urlPath = './userdata/userURLs.json';
 
-module.exports = {          //;There is an error here with the sound being played when people livestream
+module.exports = {
     name: Events.VoiceStateUpdate,
     async execute(oldState, newState) {
         const channel = newState.channelId;
-        try {
+        try { 
+            if(newState.streaming || oldState.streaming == true){
+                return;
+            }
             if (fs.existsSync(urlPath)) {
                 const urlsFromFile = JSON.parse(fs.readFileSync(urlPath));
                 userURLs = new Map(urlsFromFile);

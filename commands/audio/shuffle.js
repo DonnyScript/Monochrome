@@ -1,4 +1,4 @@
-const { useQueue,GuildQueuePlayerNode } = require("discord-player");
+const { useQueue,GuildQueuePlayerNode, GuildQueue } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
@@ -7,14 +7,13 @@ module.exports = {
         .setName('shuffle')
         .setDescription('shuffle the current queue'),
     async execute(interaction) {
-        try{                                                //Finish/Fix this
+        try{ 
             const queue = useQueue(interaction.guild.id);
-            let guildQueue = new GuildQueuePlayerNode(queue);
-            await interaction.reply("Shuffling Queue");
+            queue.toggleShuffle(false);
+            await interaction.reply('Shuffling queue');
         } catch (error) {
             await interaction.reply(`Error shuffling queue:`);
             console.log(error);
-
         }
      } 
 };
