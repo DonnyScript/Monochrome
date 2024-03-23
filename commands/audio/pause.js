@@ -10,7 +10,7 @@ module.exports = {
         try{
             const queue = useQueue(interaction.guild.id);
 
-            queue.node.setPaused(!queue.node.isPaused());//isPaused() returns true if that player is already paused
+            queue.node.setPaused(!queue.node.isPaused());
             await interaction.reply(`Can you hear me?`);
         } catch (error) {
             await interaction.reply(`Error pausing track`);

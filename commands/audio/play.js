@@ -25,19 +25,20 @@ module.exports = {
                 leaveOnEnd: false,
                 leaveOnStop:false,
             }});
-            const exampleEmbed = new EmbedBuilder()
+            
+            const trackEmbed = new EmbedBuilder()
                 .setColor(0x707a7e)
                 .setTitle(`${track.title}`)
                 .setURL(`${track.url}`)
                 .setThumbnail(`${track.thumbnail}`)
                 .setAuthor({ name: `${interaction.user.globalName} played: `, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 })}` })
                 .setTimestamp();
-            await interaction.reply({ embeds: [exampleEmbed] });
+            await interaction.reply({ embeds: [trackEmbed] });
             await wait(25000);
             await interaction.deleteReply();
             
-        } catch (e) {
-            return interaction.followUp(`Something went wrong: ${e}`);
+        } catch (error) {
+            return interaction.followUp(`Something went wrong: ${error}`);
         }
     }
 };

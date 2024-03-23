@@ -9,7 +9,6 @@ module.exports = {
     async execute(interaction) {
         try{
             const history = useHistory(interaction.guild.id);
-  
             if(history.isEmpty()){
                 return await interaction.reply("Nothing to go back to");
             }
