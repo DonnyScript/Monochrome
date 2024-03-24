@@ -1,10 +1,10 @@
 const { ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder } = require('discord.js');
 const fs = require('fs').promises;
 const path = require('path');
-const YouTube = require("youtube-sr").default;
 const userDataPath = path.join(__dirname, '..', '..', 'userdata', 'playlists.json');
 const { useMainPlayer } = require('discord-player');
 const wait = require('util').promisify(setTimeout);
+const { serialize } = require('discord-player');
 
 
 module.exports = {
@@ -31,7 +31,7 @@ module.exports = {
         let choices = [];
 
         if (focusedOption.name === 'option') {
-            choices = ['Add Song', 'Create', 'Delete Song', 'Display', 'Play'];
+            choices = ['Add Song', 'Create', 'Delete Song', 'Display', 'Play',];
         }
 
         if (focusedOption.name === 'playlist') {
@@ -66,7 +66,7 @@ module.exports = {
 
                     const result = await player.search(data);
 
-                    addLinkToPlaylist(playlistName, result._data.tracks[0].url);
+                    addSerialLink(playlistName, result._data.tracks[0].url);
                     await interaction.reply(`Adding: ${result._data.tracks[0].title} to ${playlistName}`);
                     await wait(25000);
                     await interaction.deleteReply();
@@ -102,8 +102,8 @@ module.exports = {
                     }
                     const selectOptions = specificPlaylist.links.map(playlistTitle => {
                         return new StringSelectMenuOptionBuilder()
-                            .setLabel(playlistTitle.title)
-                            .setValue(playlistTitle.title);
+                            .setLabel(playlistTitle.track.title)
+                            .setValue(playlistTitle.track.title);
                     });
     
                     const selectMenu = new StringSelectMenuBuilder()
@@ -123,7 +123,7 @@ module.exports = {
 
                     try {
                         const confirmation = await interaction.channel.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
-                        deleteFromPlaylist(confirmation.values[0], playlistName);
+                        serialDelete(confirmation.values[0], playlistName);
                         await confirmation.reply(`Deleted link with title "${confirmation.values[0]}" from playlist "${playlistName}".`);
                     } catch (error) {
                         await interaction.reply(`Error collecting: ${error}`);
@@ -142,7 +142,7 @@ module.exports = {
                     }
 
                     if (playlist && Array.isArray(playlist.links) && playlist.links.length > 0) {
-                        let playlistTracks = await displayPlaylist(playlistName, playlists);
+                        let playlistTracks = await serialDisplay(playlistName, playlists);
                         await interaction.reply(playlistTracks);
                         await wait(25000);
                         await interaction.deleteReply();
@@ -155,6 +155,7 @@ module.exports = {
                     break;
                 case 'play':
                     try {
+                        if (!channel) return interaction.followUp('You are not connected to a voice channel!');
                         let playlistQueue = [];
                         const specificPlaylist = playlists.find(p => p.name === playlistName);
 
@@ -172,7 +173,7 @@ module.exports = {
                           shuffle(playlistQueue);
 
                           playlistQueue.forEach(async (link) => {
-                            await player.play(channel,link.url)
+                            await player.play(channel,link.track.url)
                           });
 
                         await interaction.reply(`Added playlist: ${specificPlaylist.name} to the queue`)
@@ -182,6 +183,15 @@ module.exports = {
                     } catch (error) {
                         await interaction.reply('Error in playing the playlist');
                     }
+                break;
+                case 'addPlayList':
+                    if(data == null || playlistName == null){
+                        await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                        await wait(10000);
+                        await interaction.deleteReply();gmadon
+                        return;
+                    }
+                     
                 break;
             }
         } catch (error) {
@@ -234,11 +244,45 @@ async function displayPlaylist(playlistName, playlists) {
     }
 }
 
-async function addLinkToPlaylist(playlistName, youtubeURL) {
+async function serialDisplay(playlistName, playlists){
+    try {
+        const playlist = playlists.find(p => p.name === playlistName);
+        if (!playlist) {
+            return `Playlist "${playlistName}" not found.`;
+        }
+
+        const playlistString = [`Playlist "${playlistName}":`];
+        
+        for (let i = 0; i < playlist.links.length; i++) {
+            const link = playlist.links[i];
+            try {
+                playlistString.push(`${i + 1}: ${link.track.title}`);
+            } catch (error) {
+                console.error(`Error fetching title for URL ${link.track.url}:`, error);
+                playlistString.push(`${i + 1}: ${link.track.url} (Title not available)`);
+            }
+        }
+
+        return playlistString.join('\n');
+    } catch (error) {
+        console.error('Error in displayPlaylist:', error);
+        return 'An unexpected error occurred while displaying the playlist.';
+    }
+}
+
+async function addSerialLink(playlistName, newTrack){
     try {
         let playlists = [];
         const player = useMainPlayer();
-        const playlistData = await player.search(youtubeURL);
+        const searchResult = await player.search(newTrack);
+
+        if (searchResult.tracks.length === 0) {
+            return await interaction.reply('No tracks found.');
+        }
+
+        const track = searchResult.tracks[0];
+        const serializedTrack = serialize(track);
+
         try {
             await fs.access(userDataPath); 
             const playlistsContent = await fs.readFile(userDataPath);
@@ -253,25 +297,23 @@ async function addLinkToPlaylist(playlistName, youtubeURL) {
             return;
         }
 
-        const linkNumber = playlist.links.length + 1;
-
         try {
-            playlist.links.push({ number: linkNumber, url: youtubeURL, title: playlistData._data.tracks[0].title });
+            playlist.links.push({track: serializedTrack });
         } catch (error) {
-            console.error(`Error fetching title for URL ${youtubeURL}:`, error);
-            playlist.links.push({ number: linkNumber, url: youtubeURL, title: 'Title not available' });
+            console.error(`Error fetching title for URL ${newTrack}:`, error);
         }
 
         await fs.writeFile(userDataPath, JSON.stringify(playlists, null, 2));
+
     } catch (error) {
         console.error(`Error adding link to "${playlistName}" playlist:`, error);
     }
+
 }
 
-async function deleteFromPlaylist(title, playlistName) {
+async function serialDelete(title, playlistName){
     try {
         let playlists = [];
-
         try {
             await fs.access(userDataPath);
             const playlistsContent = await fs.readFile(userDataPath);
@@ -287,16 +329,14 @@ async function deleteFromPlaylist(title, playlistName) {
         }
 
         const playlist = playlists[playlistIndex];
-        const linkIndex = playlist.links.findIndex(link => link.title === title);
+        const linkIndex = playlist.links.findIndex(link => link.track.title === title);
         if (linkIndex === -1) {
             console.error(`Link with title "${title}" not found in playlist "${playlistName}".`);
             return;
         }
-
         playlist.links.splice(linkIndex, 1);
 
         await fs.writeFile(userDataPath, JSON.stringify(playlists, null, 2));
-        console.log(`Link with title "${title}" deleted from playlist "${playlistName}".`);
     } catch (error) {
         console.error(`Error deleting link from "${playlistName}" playlist:`, error);
     }

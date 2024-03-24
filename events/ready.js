@@ -13,7 +13,8 @@ module.exports = {
 			'ReverbnationExtractor',
 			'BridgedExtractor',
 			'AttachmentExtractor',
-			'AppleMusicExtractor'
+			'AppleMusicExtractor',
+			'SpotifyExtractor',
 		];
 
 		await player.extractors.loadDefault((ext) => !excludedExtractors.includes(ext));

@@ -8,39 +8,48 @@ let urlPath = './userdata/userURLs.json';
 module.exports = {
     name: Events.VoiceStateUpdate,
     async execute(oldState, newState) {
-        const channel = newState.channelId;
-        let afkChannel = '532776306497290241';
-        if(newState.channelId == afkChannel){
+        const wasInVoiceChannel = oldState && oldState.channelId;
+        const isInVoiceChannel = newState.channelId;
+        const afkChannel = '532776306497290241';
+
+        if (isInVoiceChannel === afkChannel) {
             return;
         }
-        try { 
-            if(newState.streaming || oldState.streaming == true){
-                return;
-            }
-            if (fs.existsSync(urlPath)) {
-                const urlsFromFile = JSON.parse(fs.readFileSync(urlPath));
-                userURLs = new Map(urlsFromFile);
-              } else {
-                userURLs = new Map([]);
-              }
-            
-            if (oldState.channelId && !newState.channelId) {
-                return;
-            }
-            const url = userURLs.get(newState.member.id);
-            if (!url) {
-                return;
-            }
 
-            player.play(channel, url, {
-                nodeOptions:{ 
-                    leaveOnEmpty: false,
-                    leaveOnEnd: false,
-                    leaveOnStop:false,
-                }});
+        if (newState.streaming || (oldState && oldState.streaming)) {
+            return;
+        }
 
-        } catch (error) {
-            console.log(`Error in playing join sound - ${error}`);
+        if (!wasInVoiceChannel && isInVoiceChannel) {
+            try {
+                if (fs.existsSync(urlPath)) {
+                    const urlsFromFile = JSON.parse(fs.readFileSync(urlPath));
+                    userURLs = new Map(urlsFromFile);
+                  } else {
+                    userURLs = new Map([]);
+                  }     
+
+                  if (!userURLs) {
+                    console.log("userURLs is not initialized or empty.");
+                    return;
+                    }
+
+                const url = userURLs.get(newState.member.id);
+                if (!url) {
+                    return;
+                }
+                player.play(isInVoiceChannel, url, {
+                    nodeOptions: { 
+                        leaveOnEmpty: false,
+                        leaveOnEnd: false,
+                        leaveOnStop: false,
+                    }
+                });
+            } catch (error) {
+                console.log(`Error in playing join sound - ${error}`);
+            }
         }
     },
 };
+
+
