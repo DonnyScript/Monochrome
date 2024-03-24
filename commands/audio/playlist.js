@@ -59,12 +59,12 @@ module.exports = {
                 try {
                     if(data == null || playlistName == null){
                         await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
-                        await wait(5000);
-                        await interaction.deleteReply();
+                        await wait(10000);
+                        await interaction.deleteReply();gmadon
                         return;
                     }
 
-                    const result = await player.search(data, {fallbackSearchEngine:'auto'});
+                    const result = await player.search(data);
 
                     addLinkToPlaylist(playlistName, result._data.tracks[0].url);
                     await interaction.reply(`Adding: ${result._data.tracks[0].title} to ${playlistName}`);
@@ -79,7 +79,7 @@ module.exports = {
                 case 'create':
                     if(data == null){
                         await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
-                        await wait(5000);
+                        await wait(10000);
                         await interaction.deleteReply();
                         return;
                     }
@@ -96,6 +96,8 @@ module.exports = {
 
                     if(specificPlaylist == null){
                         await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
+                        await wait(10000);
+                        await interaction.deleteReply();
                         return;
                     }
                     const selectOptions = specificPlaylist.links.map(playlistTitle => {
@@ -209,7 +211,6 @@ async function getPlaylistNames(playlists) {
 async function displayPlaylist(playlistName, playlists) {
     try {
         const playlist = playlists.find(p => p.name === playlistName);
-        console.log(playlist.links[0].title);
         if (!playlist) {
             return `Playlist "${playlistName}" not found.`;
         }
@@ -232,10 +233,12 @@ async function displayPlaylist(playlistName, playlists) {
         return 'An unexpected error occurred while displaying the playlist.';
     }
 }
+
 async function addLinkToPlaylist(playlistName, youtubeURL) {
     try {
         let playlists = [];
-
+        const player = useMainPlayer();
+        const playlistData = await player.search(youtubeURL);
         try {
             await fs.access(userDataPath); 
             const playlistsContent = await fs.readFile(userDataPath);
@@ -253,8 +256,7 @@ async function addLinkToPlaylist(playlistName, youtubeURL) {
         const linkNumber = playlist.links.length + 1;
 
         try {
-            const videoTitle = (await YouTube.getVideo(youtubeURL)).title;
-            playlist.links.push({ number: linkNumber, url: youtubeURL, title: videoTitle });
+            playlist.links.push({ number: linkNumber, url: youtubeURL, title: playlistData._data.tracks[0].title });
         } catch (error) {
             console.error(`Error fetching title for URL ${youtubeURL}:`, error);
             playlist.links.push({ number: linkNumber, url: youtubeURL, title: 'Title not available' });
@@ -299,7 +301,6 @@ async function deleteFromPlaylist(title, playlistName) {
         console.error(`Error deleting link from "${playlistName}" playlist:`, error);
     }
 }
-
 
 async function createPlaylist(playlistName) {
     try {

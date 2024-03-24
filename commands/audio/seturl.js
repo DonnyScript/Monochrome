@@ -19,7 +19,7 @@ module.exports = {
         .addStringOption(option =>
             option
                 .setName('url')
-                .setDescription('Put YouTube video URL or title here')
+                .setDescription('Put YouTube video URL ')
                 .setRequired(true)),
     async execute(interaction) {
         try{
@@ -35,7 +35,7 @@ module.exports = {
         fs.writeFileSync(urlPath, JSON.stringify([...userURLs]));
         
         await interaction.reply(`Your custom YouTube URL has been set to: ${query}`);
-        await wait(3000);
+        await wait(10000);
         await interaction.deleteReply();
         } catch (error) {
             await interaction.reply(`Error in setting intro: ${error}`);

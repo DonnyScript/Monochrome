@@ -22,8 +22,7 @@ module.exports = {
             await interaction.deleteReply();
             return;
         } catch (error) {
-            await interaction.reply(`Error skipping track`);
-            console.log(error)
+            await interaction.reply(`Error going back`);
         }
      } 
 };

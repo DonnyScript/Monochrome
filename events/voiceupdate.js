@@ -9,6 +9,10 @@ module.exports = {
     name: Events.VoiceStateUpdate,
     async execute(oldState, newState) {
         const channel = newState.channelId;
+        let afkChannel = '532776306497290241';
+        if(newState.channelId == afkChannel){
+            return;
+        }
         try { 
             if(newState.streaming || oldState.streaming == true){
                 return;

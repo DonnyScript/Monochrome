@@ -19,7 +19,7 @@ module.exports = {
         .addStringOption(option =>
             option
                 .setName('input')
-                .setDescription('Put YouTube video URL here')
+                .setDescription('Put YouTube video URL, video title, YouTube playlist here')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
@@ -27,7 +27,7 @@ module.exports = {
         const channel = interaction.member.voice.channel;
         const query = interaction.options.getString('input', true);
 
-        if (!channel) return interaction.reply('You are not connected to a voice channel!');
+        if (!channel) return interaction.followUp('You are not connected to a voice channel!');
 
         try {
             const { track } = await player.play(channel, query, { nodeOptions: {

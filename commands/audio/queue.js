@@ -16,7 +16,7 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === 'option') {
-            choices = ['Display', 'Shuffle', 'Clear','Playing'];
+            choices = ['Display', 'Shuffle', 'Clear','Playing', 'Revive'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -51,7 +51,7 @@ module.exports = {
                 }
                 )
                 await interaction.reply(currentQueue);
-                await wait(10000);
+                await wait(50000);
                 await interaction.deleteReply();
             } catch (error) {
                 await interaction.reply(`Can not display that playlist: ${error}`)
@@ -119,7 +119,25 @@ module.exports = {
                 await interaction.deleteReply();
 
             break;
+            case 'revive':
+                try{
+                    if (queue == null) {
+                        await interaction.reply("Nothing to revive");
+                        await wait(10000);
+                        await interaction.deleteReply();
+                        break;
+                    }else if (queue.currentTrack == null){
+                        await interaction.reply("Nothing to revive");
+                        await wait(15000);
+                        await interaction.deleteReply();
+                        break;
+                        }
+                queue.revive();
+                } catch(error) {
+                    await interaction.reply(`Error in reviving queue: ${error}`)
+                }
+                break;
+            }
         }
-    }
 };
 

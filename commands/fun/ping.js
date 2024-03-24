@@ -10,7 +10,7 @@ module.exports = {
 	async execute(interaction) {
 		const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 		let name = interaction.member.user.globalName;
-		await interaction.reply({content: `${name} came out of the closet to me in private, thought everyone should know.`, ephemeral: true, tts:true});
+		await interaction.reply({content: `${name} came out of the closet to me in private, thought everyone should know.`, tts:true});
 		await wait(15000);
 		await interaction.followUp({content: `${name} you though LOL`, ephemeral: true})
 	},
