@@ -2,9 +2,8 @@ const { ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder
 const fs = require('fs').promises;
 const path = require('path');
 const userDataPath = path.join(__dirname, '..', '..', 'userdata', 'playlists.json');
-const { useMainPlayer } = require('discord-player');
+const { useMainPlayer, serialize  } = require('discord-player');
 const wait = require('util').promisify(setTimeout);
-const { serialize } = require('discord-player');
 
 
 module.exports = {
@@ -60,7 +59,7 @@ module.exports = {
                     if(data == null || playlistName == null){
                         await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
                         await wait(10000);
-                        await interaction.deleteReply();gmadon
+                        await interaction.deleteReply();
                         return;
                     }
 

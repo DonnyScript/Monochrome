@@ -1,6 +1,5 @@
 const {SlashCommandBuilder } = require('discord.js');
-const { useQueue } = require("discord-player");
-const { useMainPlayer } = require('discord-player');
+const { useQueue,BiquadFilterType,useMainPlayer } = require("discord-player");
 const { EmbedBuilder } = require('discord.js');
 const wait = require('util').promisify(setTimeout);
 const excludedExtractors = [ 
@@ -27,7 +26,7 @@ module.exports = {
         let choices = [];
 
         if (focusedOption.name === 'options') {
-            choices = ['Nightcore','Heavy Metal','Gay','8D'];
+            choices = ['Nightcore','Heavy Metal','Gay','8D', 'bassboost','3d','phaser', 'reverse'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -43,7 +42,6 @@ module.exports = {
             const modifier = interaction.options.getString('options');
             const queue = useQueue(interaction.guild.id);
             let newTrack =`"${modifier}" `+ queue.currentTrack;
-
 
                 const { track } = await player.play(channel, newTrack, { nodeOptions: {
                     leaveOnEmpty: false,
