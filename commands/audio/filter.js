@@ -27,9 +27,10 @@ module.exports = {
 
         if (focusedOption.name === 'options') {
             choices = [
-                'off',
+                'default',
                 'aecho',
                 'bassboost',
+                'bassboost_low',
                 'nightcore',
                 'aphaser',
                 'apulsator',
@@ -44,6 +45,11 @@ module.exports = {
                 '8D',
                 'earrape',
                 'karaoke',
+                'expander',
+                'lofi',
+                'mstrr',
+                'treble',
+                'chorus',
                 ];
         }
 
@@ -75,10 +81,9 @@ module.exports = {
                 return;
             }
     
-            if (modifier === 'off') {
+            if (modifier === 'default') {
                 filterer.setFilters([]);
             } else {
-                // Here, you can handle enabling filters as before
                 await filterer.toggle(modifier);
             }
     

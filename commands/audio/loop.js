@@ -30,7 +30,6 @@ module.exports = {
             let name = interaction.member.user.globalName;
             let response = interaction.options.getString('options')
             const option = interaction.options.getString('options').toLowerCase();
-            console.log(choices.includes(response));
 
             if(!choices.includes(response)){
                 await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
@@ -68,9 +67,7 @@ module.exports = {
             }
             
         } catch (error) {
-            await interaction.reply(`Error in playlist block: ${error}`);
+            await interaction.reply(`Error in loop block: ${error}`);
         }
     },
 };    
-
-
