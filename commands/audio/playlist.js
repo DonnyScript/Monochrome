@@ -218,32 +218,6 @@ async function getPlaylistNames(playlists) {
     return choices;
 }
 
-async function displayPlaylist(playlistName, playlists) {
-    try {
-        const playlist = playlists.find(p => p.name === playlistName);
-        if (!playlist) {
-            return `Playlist "${playlistName}" not found.`;
-        }
-
-        const playlistString = [`Playlist "${playlistName}":`];
-        
-        for (let i = 0; i < playlist.links.length; i++) {
-            const link = playlist.links[i];
-            try {
-                playlistString.push(`${i + 1}: ${link.title}`);
-            } catch (error) {
-                console.error(`Error fetching title for URL ${link.url}:`, error);
-                playlistString.push(`${i + 1}: ${link.url} (Title not available)`);
-            }
-        }
-
-        return playlistString.join('\n');
-    } catch (error) {
-        console.error('Error in displayPlaylist:', error);
-        return 'An unexpected error occurred while displaying the playlist.';
-    }
-}
-
 async function serialDisplay(playlistName, playlists){
     try {
         const playlist = playlists.find(p => p.name === playlistName);
