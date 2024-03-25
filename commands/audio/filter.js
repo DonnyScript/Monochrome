@@ -34,6 +34,7 @@ module.exports = {
                 'nightcore',
                 'aphaser',
                 'apulsator',
+                'crystalizer',
                 'areverse',
                 'asuperstop',
                 'earwax',
@@ -50,6 +51,10 @@ module.exports = {
                 'mstrr',
                 'treble',
                 'chorus',
+                'firequalizer',
+                'haas',
+                'rubberband',
+
                 ];
         }
 
@@ -64,7 +69,6 @@ module.exports = {
             const modifier = interaction.options.getString('options');
             let name = interaction.member.user.globalName;
             const queue = useQueue(interaction.guild.id);
-
             const filterer = queue.filters.ffmpeg;
     
             if (!filterer) {

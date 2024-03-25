@@ -45,7 +45,7 @@ module.exports = {
                 .setTimestamp();
                 
             await interaction.followUp({ embeds: [trackEmbed] });
-            await wait(25000);
+            await wait(60000);
             await interaction.deleteReply();
             
         } catch (error) {
