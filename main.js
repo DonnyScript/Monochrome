@@ -26,7 +26,9 @@ const player = new Player(client, {
   skipFFmpeg: false,
 });
 
-
+module.exports = {
+    client: client
+};
 
 
 for (const folder of commandFolders) {

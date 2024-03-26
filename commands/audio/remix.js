@@ -26,7 +26,7 @@ module.exports = {
         let choices = [];
 
         if (focusedOption.name === 'options') {
-            choices = ['Nightcore','Heavy Metal','Gay','8D', 'bassboost','3d','phaser', 'reverse'];
+            choices = ['Nightcore','Heavy Metal','8D', 'bassboost'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -64,6 +64,4 @@ module.exports = {
             await interaction.followUp(`Error in remix block: ${error}`);
         }
     },
-};    
-
-
+}; 

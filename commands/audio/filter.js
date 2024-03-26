@@ -45,16 +45,13 @@ module.exports = {
                 'vaporwave',
                 '8D',
                 'earrape',
-                'karaoke',
                 'expander',
                 'lofi',
-                'mstrr',
                 'treble',
                 'chorus',
                 'firequalizer',
                 'haas',
                 'rubberband',
-
                 ];
         }
 
@@ -95,7 +92,9 @@ module.exports = {
             await wait(20000);
             await interaction.deleteReply();
         } catch (error) {
-            await interaction.followUp(`Error in remix block: ${error}`);
+            await interaction.followUp(`(no livestreams) Error in filter block: ${error}`);
+            await wait(10000);
+            await interaction.deleteReply();
         }
     }
     ,

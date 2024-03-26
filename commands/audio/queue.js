@@ -54,7 +54,10 @@ module.exports = {
                 await wait(50000);
                 await interaction.deleteReply();
             } catch (error) {
-                await interaction.reply(`Can not display that playlist: ${error}`)
+                await interaction.reply(`Can not display that queue: ${error}`)
+                await wait(10000);
+                await interaction.deleteReply();
+                break;
             }
             break;
 
