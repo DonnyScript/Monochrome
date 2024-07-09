@@ -28,7 +28,6 @@ module.exports = {
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         const query = interaction.options.getString('input', true);
-        console.log("HIT");
 
         if (!channel) return interaction.followUp('You are not connected to a voice channel!');
 
