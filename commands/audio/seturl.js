@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
-let urlPath = './../../DiscordBot/Monochrome/userdata/userURLs.json';
+let urlPath = './../../Projects/Monochrome/userdata/userURLs.json';
 let userURLs = new Map();
 const wait = require('util').promisify(setTimeout);
 
@@ -12,7 +12,6 @@ try {
 }
 
 module.exports = {
-    category: 'audio',
     data: new SlashCommandBuilder()
         .setName('seturl')
         .setDescription('Sets intro url')

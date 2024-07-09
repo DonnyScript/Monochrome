@@ -1,15 +1,6 @@
 const {SlashCommandBuilder } = require('discord.js');
 const { useQueue, } = require("discord-player");
 const wait = require('util').promisify(setTimeout);
-const excludedExtractors = [ 
-    'VimeoExtractor',
-    'SoundCloudExtractor',
-    'ReverbnationExtractor',
-    'BridgedExtractor',
-    'AttachmentExtractor',
-    'AppleMusicExtractor',
-    'SpotifyExtractor',
-];
 let choices = [];
 
 module.exports = {

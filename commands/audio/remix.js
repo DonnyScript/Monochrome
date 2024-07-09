@@ -4,7 +4,6 @@ const { EmbedBuilder } = require('discord.js');
 const wait = require('util').promisify(setTimeout);
 const excludedExtractors = [ 
     'VimeoExtractor',
-    'SoundCloudExtractor',
     'ReverbnationExtractor',
     'BridgedExtractor',
     'AttachmentExtractor',

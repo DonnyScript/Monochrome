@@ -9,37 +9,59 @@ const excludedExtractors = [
     'BridgedExtractor',
     'AttachmentExtractor',
     'AppleMusicExtractor',
-    'SpotifyExtractor',
+    'YouTubeExtractor',
 ];
+
+
+async function playWithRetry(channel, url, retryCount = 3, delay = 5000) {
+    try {
+        const player = useMainPlayer();
+        const { track } = await player.play(channel, url, {
+            nodeOptions: {
+                leaveOnEmpty: false,
+                leaveOnEnd: false,
+                leaveOnStop: false,
+            }, blockExtractors: {excludedExtractors}});
+        return track;
+    } catch (error) {
+        if (retryCount <= 0) {
+            throw new Error(`Failed to play ${url} after multiple retries: ${error}`);
+        }
+        console.log(`Error playing ${url}. Retrying ${retryCount} more times.`);
+        await wait(delay);
+        return playWithRetry(channel, url, retryCount - 1, delay);
+    }
+}
 
 
 module.exports = {
     category: 'audio',
     data: new SlashCommandBuilder()
-        .setName('play')
-        .setDescription('Plays a URL or searches YouTube')
+        .setName('play_all')
+        .setDescription('Will play links from all supported streaming services')
         .addStringOption(option =>
             option
                 .setName('input')
-                .setDescription('Put YouTube video URL, video title, YouTube playlist here')
+                .setDescription('Put Spotify video URL, video title, Spotify playlist here')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         const query = interaction.options.getString('input', true);
-        console.log("HIT");
 
         if (!channel) return interaction.followUp('You are not connected to a voice channel!');
 
         try {
+            //const track = await playWithRetry(channel,query);
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
                     leaveOnEmpty: false,
                     leaveOnEnd: false,
                     leaveOnStop: false,
                 }});
-             const trackEmbed = new EmbedBuilder()
+
+            const trackEmbed = new EmbedBuilder()
                 .setColor(0x707a7e)
                 .setTitle(`${track.title}`)
                 .setURL(`${track.url}`)

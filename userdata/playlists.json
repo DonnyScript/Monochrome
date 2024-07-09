@@ -568,16 +568,389 @@
           "$type": "track",
           "$encoder_version": "6.6.7"
         }
+      },
+      {
+        "track": {
+          "title": "Boom Boom Pow",
+          "description": "Boom Boom Pow by Black Eyed Peas",
+          "author": "Black Eyed Peas",
+          "url": "https://www.youtube.com/watch?v=dKiad-CC44o",
+          "thumbnail": "https://i3.ytimg.com/vi/dKiad-CC44o/maxresdefault.jpg",
+          "duration": "4:12",
+          "views": 4088918,
+          "requested_by": null,
+          "source": "youtube",
+          "live": false,
+          "query_type": "autoSearch",
+          "extractor": "com.discord-player.youtubeextractor",
+          "metadata": {
+            "id": "dKiad-CC44o",
+            "url": "https://www.youtube.com/watch?v=dKiad-CC44o",
+            "shorts_url": "https://www.youtube.com/watch?v=dKiad-CC44o",
+            "title": "Boom Boom Pow",
+            "description": null,
+            "duration": 252000,
+            "duration_formatted": "4:12",
+            "uploadedAt": null,
+            "unlisted": false,
+            "nsfw": false,
+            "thumbnail": {
+              "id": "dKiad-CC44o",
+              "width": 720,
+              "height": 404,
+              "url": "https://i.ytimg.com/vi/dKiad-CC44o/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCmqpbnru4bXcVw4am0c9GcYR2BFw"
+            },
+            "channel": {
+              "name": "Black Eyed Peas",
+              "id": "UCBFaOy1_APEXEyA6Gws_Y1g",
+              "icon": "https://yt3.ggpht.com/qnQSZxshP9aOo40rnnjuREfQHZ-7_NMHAQ2o8D1tHh8dLu8tov7aCsbGiEZ1Zl7P2oeXMhWiPZg=s0-c-k-c0x00ffffff-no-rj"
+            },
+            "views": 4088918,
+            "type": "video",
+            "tags": [],
+            "ratings": {
+              "likes": 0,
+              "dislikes": 0
+            },
+            "shorts": false,
+            "live": false,
+            "private": false
+          },
+          "$type": "track",
+          "$encoder_version": "6.6.7"
+        }
       }
     ]
   },
   {
     "name": "test",
-    "links": []
+    "links": [
+      {
+        "track": {
+          "title": "One Winged Angel but with Classic Internet Era Memes",
+          "description": "One Winged Angel but with Classic Internet Era Memes by SiIvaGunner",
+          "author": "SiIvaGunner",
+          "url": "https://www.youtube.com/watch?v=M5CeQG1YfEQ",
+          "thumbnail": "https://i3.ytimg.com/vi/M5CeQG1YfEQ/maxresdefault.jpg",
+          "duration": "6:41",
+          "views": 8751,
+          "requested_by": null,
+          "source": "youtube",
+          "live": false,
+          "query_type": "autoSearch",
+          "extractor": "com.discord-player.youtubeextractor",
+          "metadata": {
+            "id": "M5CeQG1YfEQ",
+            "url": "https://www.youtube.com/watch?v=M5CeQG1YfEQ",
+            "shorts_url": "https://www.youtube.com/watch?v=M5CeQG1YfEQ",
+            "title": "One Winged Angel but with Classic Internet Era Memes",
+            "description": null,
+            "duration": 401000,
+            "duration_formatted": "6:41",
+            "uploadedAt": "3 hours ago",
+            "unlisted": false,
+            "nsfw": false,
+            "thumbnail": {
+              "id": "M5CeQG1YfEQ",
+              "width": 720,
+              "height": 404,
+              "url": "https://i.ytimg.com/vi/M5CeQG1YfEQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA6rLnIuetB8kOHx7nJKnQ8k6X2GQ"
+            },
+            "channel": {
+              "name": "SiIvaGunner",
+              "id": "UC9ecwl3FTG66jIKA9JRDtmg",
+              "icon": "https://yt3.ggpht.com/rQ8Qb_P6-MPWYDAdljsUinY9cMpCPhGfK95P_Nd6nSj2q4JVE71f9Kc648Lgf-rgly_qZSwLHQ=s0-c-k-c0x00ffffff-no-rj"
+            },
+            "views": 8751,
+            "type": "video",
+            "tags": [],
+            "ratings": {
+              "likes": 0,
+              "dislikes": 0
+            },
+            "shorts": false,
+            "live": false,
+            "private": false
+          },
+          "$type": "track",
+          "$encoder_version": "6.6.7"
+        }
+      },
+      {
+        "track": {
+          "title": "Mad Cobra - Flex",
+          "description": "Mad Cobra - Flex by MadCobraVEVO",
+          "author": "MadCobraVEVO",
+          "url": "https://www.youtube.com/watch?v=XAe3sIxcXw0",
+          "thumbnail": "https://i3.ytimg.com/vi/XAe3sIxcXw0/maxresdefault.jpg",
+          "duration": "3:40",
+          "views": 17846477,
+          "requested_by": null,
+          "source": "youtube",
+          "live": false,
+          "query_type": "youtubeVideo",
+          "extractor": "com.discord-player.youtubeextractor",
+          "metadata": {
+            "id": "XAe3sIxcXw0",
+            "url": "https://www.youtube.com/watch?v=XAe3sIxcXw0",
+            "shorts_url": "https://www.youtube.com/watch?v=XAe3sIxcXw0",
+            "title": "Mad Cobra - Flex",
+            "description": "Mad Cobra's official music video for 'Flex'. Click to listen to Mad Cobra on Spotify: http://smarturl.it/MadCSpotify?IQid=MadCF\n\nAs featured on Hard to Wet Easy to Dry. Click to buy the track or album via iTunes: http://smarturl.it/MCFiTunes?IQid=MadCF\nGoogle Play: http://smarturl.it/MCFPlay?IQid=MadCF\nAmazon: http://smarturl.it/MCH2Waz?IQid=MadCF\n\nMore from Mad Cobra\nLegacy: https://youtu.be/sGoA49PCKKo\nDead End Street: https://youtu.be/oOGj78ms2u0\n\nMore great 90s videos here: http://smarturl.it/Ultimate90?IQid=MadCF\n\nFollow Mad Cobra\nWebsite: http://madcobramuzik.com/\nTwitter: https://twitter.com/MadCobraMuzik\n\nSubscribe to Mad Cobra on YouTube: http://smarturl.it/MadCSub?IQid=MadCF\n\n---------\n\nLyrics:\n\nCrying, moaning, just can't wait 'til morning\nWaiting too long, finally yuh come a long\nBaby love, explain yuhself, baby girl\nLead out, lead out, lead out, lead out\n\nLike a clock ticking on the wall, seven days a week\nSo weak I need yuh body next to mine\nCyaan eat nor sleep like a club to a screw\nI do you so neat, spread your feet\n\nGirl flex, time to have sex\nLong time yuh have di rude bwoy\nYah a sweat girl, flex time to have sex\nLook how long yuh have di rude bwoy a sweat\n\nI rather wait out-a patience\nLovin' she get that will be sufficient\nI rather wait till I cyaan wait no more\nX amount of lovin hardcore\nMe a listen jus to hear she knock 'pon di door\nOnly to touch her me nuh want know no more",
+            "duration": 220000,
+            "duration_formatted": "3:40",
+            "uploadedAt": "Nov 3, 2013",
+            "unlisted": false,
+            "nsfw": false,
+            "thumbnail": {
+              "id": "XAe3sIxcXw0",
+              "width": 1920,
+              "height": 1080,
+              "url": "https://i.ytimg.com/vi_webp/XAe3sIxcXw0/maxresdefault.webp"
+            },
+            "channel": {
+              "name": "MadCobraVEVO",
+              "id": "UCisTFCPI0pvUxLFcdZ4PAAQ",
+              "icon": "https://yt3.ggpht.com/ytc/AIdro_kwKHb70Rio1SjpSJJn5vzhTFe0qEEEiPUHM3Ble2gEjg=s0-c-k-c0x00ffffff-no-rj-mo"
+            },
+            "views": 17846477,
+            "type": "video",
+            "tags": [
+              "dis dem anyweh",
+              "tek him",
+              "Mad Cobra",
+              "di baddest",
+              "acapella",
+              "acoustic",
+              "legacy",
+              "music",
+              "bust move",
+              "instrumental",
+              "press trigga",
+              "Dancehall",
+              "chopped and screwed",
+              "Ewart Everton Brown",
+              "vevo",
+              "official",
+              "download",
+              "karaoke",
+              "remix",
+              "riddim",
+              "war",
+              "reggae fusion",
+              "lyrics",
+              "audio",
+              "official video",
+              "cover",
+              "flex",
+              "2015",
+              "flex instrumental",
+              "Sony",
+              "music video",
+              "flex remix",
+              "playlist",
+              "single",
+              "album",
+              "live",
+              "Flex",
+              "Reggae",
+              "SMCMG"
+            ],
+            "ratings": {
+              "likes": 0,
+              "dislikes": 0
+            },
+            "shorts": false,
+            "live": false,
+            "private": false,
+            "music": [
+              {
+                "title": "Flex",
+                "cover": "https://lh3.googleusercontent.com/Yg14czGIsArB0LblolAodSB9pEDdJjkS_jBm9RJqIzZS0KEL8c_MgtxaBcVTbPa-ZViIC2J-zK6yclsL",
+                "artist": "Mad Cobra",
+                "album": "Hard To Wet, Easy To Dry"
+              }
+            ]
+          },
+          "$type": "track",
+          "$encoder_version": "6.6.8"
+        }
+      }
+    ]
   },
   {
     "name": "Slangercore",
-    "links": []
+    "links": [
+      {
+        "track": {
+          "title": "One Piece - 4kids Pirate Rap -English Opening",
+          "description": "One Piece - 4kids Pirate Rap -English Opening by DragonBlaze67",
+          "author": "DragonBlaze67",
+          "url": "https://www.youtube.com/watch?v=RSe8D2wfGKI",
+          "thumbnail": "https://i.ytimg.com/vi/RSe8D2wfGKI/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gSAAuADigIMCAAQARhlIF8oSTAP&rs=AOn4CLAIwQrlrFJWw7scpLkhvU9Ph6ynjA",
+          "duration": "1:30",
+          "views": 0,
+          "requested_by": null,
+          "source": "youtube",
+          "live": false,
+          "query_type": "youtubeVideo",
+          "extractor": "com.discord-player.youtubeextractor",
+          "metadata": {
+            "id": "RSe8D2wfGKI",
+            "url": "https://www.youtube.com/watch?v=RSe8D2wfGKI",
+            "shorts_url": "https://www.youtube.com/watch?v=RSe8D2wfGKI",
+            "title": "One Piece - 4kids Pirate Rap -English Opening",
+            "description": null,
+            "duration": 90000,
+            "duration_formatted": "1:30",
+            "uploadedAt": null,
+            "unlisted": false,
+            "nsfw": false,
+            "thumbnail": {
+              "id": "RSe8D2wfGKI",
+              "width": 336,
+              "height": 188,
+              "url": "https://i.ytimg.com/vi/RSe8D2wfGKI/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gSAAuADigIMCAAQARhlIF8oSTAP&rs=AOn4CLAIwQrlrFJWw7scpLkhvU9Ph6ynjA"
+            },
+            "channel": {
+              "name": "DragonBlaze67",
+              "id": "UCWwO2qRSWoTTRiT_sy-J5qQ",
+              "icon": null
+            },
+            "views": 0,
+            "type": "video",
+            "tags": [],
+            "ratings": {
+              "likes": 0,
+              "dislikes": 0
+            },
+            "shorts": false,
+            "live": false,
+            "private": false
+          },
+          "$type": "track",
+          "$encoder_version": "6.6.7"
+        }
+      },
+      {
+        "track": {
+          "title": "Spongebob & Mr Krabs - Ein Grill ist ein Grill - Lyrics",
+          "description": "Spongebob & Mr Krabs - Ein Grill ist ein Grill - Lyrics by Zanessa4evainlove",
+          "author": "Zanessa4evainlove",
+          "url": "https://www.youtube.com/watch?v=tSek15l-TLA",
+          "thumbnail": "https://i3.ytimg.com/vi/tSek15l-TLA/maxresdefault.jpg",
+          "duration": "1:07",
+          "views": 427889,
+          "requested_by": null,
+          "source": "youtube",
+          "live": false,
+          "query_type": "youtubeVideo",
+          "extractor": "com.discord-player.youtubeextractor",
+          "metadata": {
+            "id": "tSek15l-TLA",
+            "url": "https://www.youtube.com/watch?v=tSek15l-TLA",
+            "shorts_url": "https://www.youtube.com/watch?v=tSek15l-TLA",
+            "title": "Spongebob & Mr Krabs - Ein Grill ist ein Grill - Lyrics",
+            "description": "I don't own anything!\n\nThat's my first lyrics video...don't be to critical pls!\n(my first cause me and my bff are sharing this account!!! the other lyrics videos are from her!)",
+            "duration": 67000,
+            "duration_formatted": "1:07",
+            "uploadedAt": "Jul 29, 2013",
+            "unlisted": false,
+            "nsfw": false,
+            "thumbnail": {
+              "id": "tSek15l-TLA",
+              "width": 1920,
+              "height": 1080,
+              "url": "https://i.ytimg.com/vi/tSek15l-TLA/maxresdefault.jpg"
+            },
+            "channel": {
+              "name": "Zanessa4evainlove",
+              "id": "UCX9GkervK0s-lhI3hTV495g",
+              "icon": "https://yt3.ggpht.com/ytc/AIdro_mc2qyxeRNHZWYWU1nCSlajtvPQjcG4nlV2Xrg0=s0-c-k-c0x00ffffff-no-rj"
+            },
+            "views": 427889,
+            "type": "video",
+            "tags": [
+              "SpongeBob SquarePants (TV Program)"
+            ],
+            "ratings": {
+              "likes": 0,
+              "dislikes": 0
+            },
+            "shorts": false,
+            "live": false,
+            "private": false
+          },
+          "$type": "track",
+          "$encoder_version": "6.6.7"
+        }
+      },
+      {
+        "track": {
+          "title": "Spongebob Fun German",
+          "description": "Spongebob Fun German by erwwse rrrwwws",
+          "author": "erwwse rrrwwws",
+          "url": "https://www.youtube.com/watch?v=TTDXg6TBPo0",
+          "thumbnail": "https://i3.ytimg.com/vi/TTDXg6TBPo0/maxresdefault.jpg",
+          "duration": "1:37",
+          "views": 2970093,
+          "requested_by": null,
+          "source": "youtube",
+          "live": false,
+          "query_type": "youtubeVideo",
+          "extractor": "com.discord-player.youtubeextractor",
+          "metadata": {
+            "id": "TTDXg6TBPo0",
+            "url": "https://www.youtube.com/watch?v=TTDXg6TBPo0",
+            "shorts_url": "https://www.youtube.com/watch?v=TTDXg6TBPo0",
+            "title": "Spongebob Fun German",
+            "description": "Spongebob Fun Deutsch",
+            "duration": 97000,
+            "duration_formatted": "1:37",
+            "uploadedAt": "Apr 30, 2009",
+            "unlisted": false,
+            "nsfw": false,
+            "thumbnail": {
+              "id": "TTDXg6TBPo0",
+              "width": 336,
+              "height": 188,
+              "url": "https://i.ytimg.com/vi/TTDXg6TBPo0/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDzCTLsoCJGzu1gnAA9NGGYEQtE_w"
+            },
+            "channel": {
+              "name": "erwwse rrrwwws",
+              "id": "UCpge3IVEQ9S5Gew4BU4as8Q",
+              "icon": "https://yt3.ggpht.com/ytc/AIdro_nRcBZjn8_1j25t2Nz2jz3nPR7jLzMGx-rJBuro=s0-c-k-c0x00ffffff-no-rj"
+            },
+            "views": 2970093,
+            "type": "video",
+            "tags": [
+              "Spongebob",
+              "Fun",
+              "Deutsch",
+              "Plankton",
+              "Schwamm",
+              "Kopf",
+              "Schwammkopf",
+              "German",
+              "Lustig",
+              "Gut",
+              "funny",
+              "interessant",
+              "cool",
+              "schön"
+            ],
+            "ratings": {
+              "likes": 0,
+              "dislikes": 0
+            },
+            "shorts": false,
+            "live": false,
+            "private": false
+          },
+          "$type": "track",
+          "$encoder_version": "6.6.7"
+        }
+      }
+    ]
   },
   {
     "name": "HipHop",
@@ -787,5 +1160,9 @@
         }
       }
     ]
+  },
+  {
+    "name": "X",
+    "links": []
   }
 ]

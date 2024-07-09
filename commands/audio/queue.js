@@ -16,7 +16,7 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === 'option') {
-            choices = ['Display', 'Shuffle', 'Clear','Playing', 'Revive'];
+            choices = ['Display', 'Shuffle', 'Clear','Playing'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
@@ -28,6 +28,7 @@ module.exports = {
         const queue = useQueue(interaction.guild.id);
         const option = interaction.options.getString('option').toLowerCase();
         const userQuery = interaction.options.getString('option');
+        const numberOfTracks = queue.getSize();
 
         if(!choices.includes(userQuery)){
             await interaction.reply({content: `${name} did not use the command correctly, thought everyone should know.`, tts:true});
@@ -38,21 +39,34 @@ module.exports = {
         switch (option) {
             case 'display':
             try {
-                if (queue == null) {
+                if(numberOfTracks == 0){
                     await interaction.reply("Queue is empty");
                     await wait(10000);
                     await interaction.deleteReply();
                     break;
                 }
+
                 const tracks = queue.tracks.toArray();
-                let currentQueue = `Current queue:\n- ${queue.currentTrack} \n`;
-                tracks.forEach((title) => {
-                    currentQueue += `- ${title} \n`;
+                const pageSize = 25;
+                let pages = [];
+
+                for (let i = 0; i < tracks.length; i += pageSize) {
+                    let page = tracks.slice(i, i + pageSize);
+                    let currentPage = `Current queue (Page ${Math.ceil((i + 1) / pageSize)}):\n`;
+                    page.forEach((title, index) => {
+                        currentPage += `${i + index + 1}. ${title}\n`;
+                    });
+                    pages.push(currentPage);
                 }
-                )
-                await interaction.reply(currentQueue);
-                await wait(50000);
-                await interaction.deleteReply();
+
+                await interaction.reply(pages[0]); 
+                pages.shift();
+
+                for (const page of pages) {
+                    await interaction.followUp(page);
+                    await wait(5000);
+                }
+
             } catch (error) {
                 await interaction.reply(`Can not display that queue: ${error}`)
                 await wait(10000);
@@ -60,6 +74,9 @@ module.exports = {
                 break;
             }
             break;
+            
+            
+            
 
             case 'shuffle':
                 try{ 
@@ -122,24 +139,6 @@ module.exports = {
                 await interaction.deleteReply();
 
             break;
-            case 'revive':
-                try{
-                    if (queue == null) {
-                        await interaction.reply("Nothing to revive");
-                        await wait(10000);
-                        await interaction.deleteReply();
-                        break;
-                    }else if (queue.currentTrack == null){
-                        await interaction.reply("Nothing to revive");
-                        await wait(15000);
-                        await interaction.deleteReply();
-                        break;
-                        }
-                queue.revive();
-                } catch(error) {
-                    await interaction.reply(`Error in reviving queue: ${error}`)
-                }
-                break;
             }
         }
 };

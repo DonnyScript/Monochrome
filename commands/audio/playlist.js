@@ -5,6 +5,26 @@ const userDataPath = path.join(__dirname, '..', '..', 'userdata', 'playlists.jso
 const { useMainPlayer, serialize  } = require('discord-player');
 const wait = require('util').promisify(setTimeout);
 
+async function playWithRetry(channel, url, retryCount = 3, delay = 5000) {
+    try {
+        const player = useMainPlayer();
+        const { track } = await player.play(channel, url, {
+            nodeOptions: {
+                leaveOnEmpty: false,
+                leaveOnEnd: false,
+                leaveOnStop: false,
+            }
+        });
+        return track;
+    } catch (error) {
+        if (retryCount <= 0) {
+            throw new Error(`Failed to play ${url} after multiple retries: ${error}`);
+        }
+        console.log(`Error playing ${url}. Retrying ${retryCount} more times.`);
+        await wait(delay);
+        return playWithRetry(channel, url, retryCount - 1, delay);
+    }
+}
 
 module.exports = {
     category: 'audio',
@@ -172,7 +192,7 @@ module.exports = {
                           shuffle(playlistQueue);
 
                           playlistQueue.forEach(async (link) => {
-                            await player.play(channel,link.track.url)
+                            await playWithRetry(channel,link.track.url);
                           });
 
                         await interaction.reply(`Added playlist: ${specificPlaylist.name} to the queue`)
