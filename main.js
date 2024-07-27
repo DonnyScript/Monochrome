@@ -59,4 +59,10 @@ for (const file of eventFiles) {
 }
 
 
+// prevent crash on unhandled promise rejection
+process.on("unhandledRejection", (reason) => console.error(reason));
+// prevent crash on uncaught exception
+process.on("uncaughtException", (error) => console.error(error));
+// log warning
+process.on("warning", (warning) => console.error(warning));
 client.login(ENV_VAR.token);

@@ -3,30 +3,7 @@ const { useMainPlayer } = require('discord-player');
 const fs = require('fs');
 const path = require('path');
 const player = useMainPlayer();
-const { promisify } = require('util');
-const wait = promisify(setTimeout);
 let urlPath = path.join(__dirname, '../userdata/userURLs.json');
-
-async function playWithRetry(channel, url, retryCount = 3, delay = 5000) {
-    try {
-        const { track } = await player.play(channel, url, {
-            nodeOptions: {
-                leaveOnEmpty: false,
-                leaveOnEnd: false,
-                leaveOnStop: false,
-            }
-        });
-        return track;
-    } catch (error) {
-        if (retryCount <= 0) {
-            console.log(`Failed to play ${url} after multiple retries: ${error}`);
-            return null;
-        }
-        console.log(`Error playing ${url}. Retrying ${retryCount} more times.`);
-        await wait(delay);
-        return playWithRetry(channel, url, retryCount - 1, delay);
-    }
-}
 
 module.exports = {
     name: Events.VoiceStateUpdate,
@@ -35,10 +12,12 @@ module.exports = {
             const wasInVoiceChannel = oldState && oldState.channelId;
             const isInVoiceChannel = newState.channelId;
             const afkChannel = '532776306497290241';
-
-            if (isInVoiceChannel === afkChannel) {
+            const test = '1220654441888350259';
+            
+            if (isInVoiceChannel !== afkChannel && isInVoiceChannel !== test) {
                 return;
             }
+            
 
             if (newState.streaming || (oldState && oldState.streaming)) {
                 return;
@@ -62,7 +41,12 @@ module.exports = {
                     return;
                 }
 
-                const track = await playWithRetry(isInVoiceChannel, url);
+                const { track } = await player.play(isInVoiceChannel, url, {
+                    nodeOptions: {
+                        leaveOnEmpty: false,
+                        leaveOnEnd: false,
+                        leaveOnStop: false,
+                    }});
                 if (!track) {
                     console.log(`Failed to play URL for user ${newState.member.id}`);
                     return;
