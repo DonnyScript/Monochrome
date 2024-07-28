@@ -11,10 +11,10 @@ module.exports = {
         try {
             const wasInVoiceChannel = oldState && oldState.channelId;
             const isInVoiceChannel = newState.channelId;
-            const afkChannel = '532776306497290241';
+            const primary = '389618932715094020';
             const test = '1220654441888350259';
             
-            if (isInVoiceChannel !== afkChannel && isInVoiceChannel !== test) {
+            if (isInVoiceChannel !== primary && isInVoiceChannel !== test) {
                 return;
             }
             
