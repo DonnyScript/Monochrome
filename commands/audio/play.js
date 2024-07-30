@@ -31,7 +31,7 @@ async function suggest(interaction) {
         const truncatedTitle = track.title.length > maxLength ? track.title.slice(0, maxLength - 3) + '...' : track.title;
 
         return {
-            name: `${track.author}: ${truncatedTitle}`,
+            name: track.title.slice(0, 100),
             value: track.url,
         };
     });
