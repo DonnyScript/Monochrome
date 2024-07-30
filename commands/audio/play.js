@@ -26,13 +26,19 @@ async function suggest(interaction) {
         ? searchResult.playlist.tracks.slice(0, 24)
         : searchResult.tracks.slice(0, 10);
 
-    const formattedResult = tracks.map((track) => ({
-        name: track.title.slice(0, 100),
-        value: track.url,
-    }));
+    const formattedResult = tracks.map((track) => {
+        const maxLength = 100 - (track.author.length + 2); 
+        const truncatedTitle = track.title.length > maxLength ? track.title.slice(0, maxLength - 3) + '...' : track.title;
+
+        return {
+            name: `${track.author}: ${truncatedTitle}`,
+            value: track.url,
+        };
+    });
 
     await interaction.respond(formattedResult);
 }
+
 
 module.exports = {
     category: 'audio',
