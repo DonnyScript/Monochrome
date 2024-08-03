@@ -1,6 +1,4 @@
-const { useQueue } = require("discord-player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const wait = require('util').promisify(setTimeout);
 const axios = require('axios');
 
 

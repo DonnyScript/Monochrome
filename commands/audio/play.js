@@ -2,15 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { useMainPlayer } = require('discord-player');
 const { EmbedBuilder } = require('discord.js');
 const wait = require('util').promisify(setTimeout);
-const excludedExtractors = [
-    'VimeoExtractor',
-    'SoundCloudExtractor',
-    'ReverbnationExtractor',
-    'BridgedExtractor',
-    'AttachmentExtractor',
-    'AppleMusicExtractor',
-    'SpotifyExtractor',
-];
+
 
 async function suggest(interaction) {
     const query = interaction.options.getString('input', false)?.trim();
