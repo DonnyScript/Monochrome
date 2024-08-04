@@ -1,6 +1,7 @@
 const ENV_VAR = require("./config.json")
 const fs = require('node:fs');
 const path = require('node:path');
+const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 const { Client,
 		  Collection,
@@ -24,11 +25,15 @@ const { Player } = require('discord-player');
 const player = new Player(client, {
   useLegacyFFmpeg: false,
   skipFFmpeg: false,
+  connectionTimeout: 5 * 60 * 1000
 });
 
 module.exports = {
     client: client
 };
+
+	 player.extractors.loadDefault((extractor) => extractor !== "YouTubeExtractor");
+	 player.extractors.register(YoutubeiExtractor, {});
 
 
 for (const folder of commandFolders) {
