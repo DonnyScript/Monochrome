@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const { useMainPlayer } = require('discord-player');
+const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 module.exports = {
 	name: Events.ClientReady,
@@ -14,7 +15,7 @@ module.exports = {
 			'BridgedExtractor',
 			'AttachmentExtractor',
 		];
-
-		player.extractors.loadDefault((ext) => !excludedExtractors.includes(ext));
+		player.extractors.loadDefault((extractor) => extractor !== "YouTubeExtractor");
+		player.extractors.register(YoutubeiExtractor, {});
 	},
 };
