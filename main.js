@@ -24,7 +24,6 @@ const { Player } = require('discord-player');
 const player = new Player(client, {
   useLegacyFFmpeg: false,
   skipFFmpeg: false,
-  connectionTimeout: 5 * 60 * 1000
 });
 
 module.exports = {

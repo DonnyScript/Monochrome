@@ -19,7 +19,7 @@ module.exports = {
         await interaction.deferReply();
 
         const powershellPath = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe';
-        const command = 'ollama run dolphin-llama3:8b';
+        const command = 'ollama run qwen2:1.5b';
         const childProcess = spawn(powershellPath, ['-Command', command]);
 
         let output = '';
