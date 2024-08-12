@@ -7,11 +7,11 @@ function cleanOutput(output) {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('llama')
-        .setDescription('Send a message to the LLM model and get a response.')
+        .setName('chat')
+        .setDescription('Send a message to Monochrome')
         .addStringOption(option =>
             option.setName('input')
-                .setDescription('The message to send to the LLM model')
+                .setDescription('message')
                 .setRequired(true)),
     async execute(interaction) {
         const userInput = interaction.options.getString('input');
