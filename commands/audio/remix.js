@@ -25,7 +25,7 @@ module.exports = {
         let choices = [];
 
         if (focusedOption.name === 'options') {
-            choices = ['Nightcore','Heavy Metal','8D', 'bassboost'];
+            choices = ['Nightcore','Heavy Metal','8D', 'bassboost','Rick Roll'];
         }
 
         const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
