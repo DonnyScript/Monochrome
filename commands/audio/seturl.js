@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
-let urlPath = './../../Documents/Monochrome/userdata/userURLs.json';
+let urlPath = '/home/abyss/Monochrome/userdata/userURLs.json';
 let userURLs = new Map();
 const wait = require('util').promisify(setTimeout);
 
