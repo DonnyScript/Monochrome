@@ -3,20 +3,18 @@ const { PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('mute')
-    .setDescription('Toggle server mute for a member (Bot owner only)')
+    .setName('Shhh')
+    .setDescription("You can't do this, dont even")
     .addStringOption(option =>
       option.setName('target')
-        .setDescription('The member to toggle mute')
+        .setDescription('The member to')
         .setAutocomplete(true)
         .setRequired(true)
-    )
-    .setDefaultMemberPermissions(0)
-    .setDMPermission(false),
+    ),
 
   async execute(interaction) {
     if (interaction.user.id !== '418235415665836033') {
-      return interaction.reply({ content: "You do not have permission to use this command!", ephemeral: true });
+      return interaction.reply({ content: "Again, you can't do this", ephemeral: true });
     }
 
     const targetId = interaction.options.getString('target');
@@ -34,7 +32,7 @@ module.exports = {
 
     const isMuted = member.voice.serverMute;
     try {
-      await member.voice.setMute(!isMuted, `${isMuted ? 'Unmuted' : 'Muted'} by bot owner: ${interaction.user.tag}`);
+      await member.voice.setMute(!isMuted, `${interaction.user.tag} asked me to ${isMuted ? 'Unmute' : 'Mute'}`);
       return interaction.reply({
         content: `${member.displayName} has been ${isMuted ? 'unmuted' : 'server muted'}.`
       });

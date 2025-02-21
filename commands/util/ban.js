@@ -2,20 +2,18 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('ban')
-    .setDescription('Ban a member (Bot owner only)')
+    .setName('wipe')
+    .setDescription("You can't do this")
     .addStringOption(option =>
       option.setName('target')
-        .setDescription('The member to ban')
+        .setDescription('The member to')
         .setAutocomplete(true)
         .setRequired(true)
-    )
-    .setDefaultMemberPermissions(0)
-    .setDMPermission(false),
+    ),
 
   async execute(interaction) {
     if (interaction.user.id !== '418235415665836033') {
-      return interaction.reply({ content: "You do not have permission to use this command!", ephemeral: true });
+      return interaction.reply({ content: "Again, you can't do this", ephemeral: true });
     }
 
     const targetId = interaction.options.getString('target');
@@ -35,7 +33,7 @@ module.exports = {
     const botMember = await interaction.guild.members.fetch(interaction.client.user.id);
 
     if (!botMember.permissions.has('BAN_MEMBERS')) {
-      return interaction.reply({ content: "I don't have permission to ban members.", ephemeral: true });
+      return interaction.reply({ content: "Not doing it, don't worry", ephemeral: true });
     }
 
     if (member.roles.highest.position >= botMember.roles.highest.position) {
@@ -44,7 +42,7 @@ module.exports = {
 
     try {
       await member.ban({ reason: `Banned by bot owner: ${interaction.user.tag}` });
-      return interaction.reply({ content: `Successfully banned ${member.user.tag}` });
+      return interaction.reply({ content: `I have wiped ${member.user.tag} from the server`});
     } catch (error) {
       console.error("Error banning member:", error);
       return interaction.reply({ content: "Failed to ban the member.", ephemeral: true });

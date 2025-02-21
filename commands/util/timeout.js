@@ -4,10 +4,10 @@ const { PermissionFlagsBits } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('timeout')
-    .setDescription('Timeout a member for a specific duration (Bot owner only)')
+    .setDescription("You can't do this, dont even")
     .addStringOption(option =>
       option.setName('target')
-        .setDescription('The member to timeout')
+        .setDescription('The member to')
         .setAutocomplete(true)
         .setRequired(true)
     )
@@ -15,13 +15,11 @@ module.exports = {
       option.setName('duration')
         .setDescription('Duration in minutes')
         .setRequired(true)
-    )
-    .setDefaultMemberPermissions(0)
-    .setDMPermission(false),
+    ),
 
   async execute(interaction) {
     if (interaction.user.id !== '418235415665836033') {
-      return interaction.reply({ content: "You do not have permission to use this command!", ephemeral: true });
+      return interaction.reply({ content: "Again, you can't do this", ephemeral: true });
     }
 
     const targetId = interaction.options.getString('target');
@@ -40,7 +38,7 @@ module.exports = {
 
     try {
       await member.timeout(duration * 60 * 1000, `Timed out by bot owner: ${interaction.user.tag}`);
-      return interaction.reply({ content: `${member.displayName} has been timed out for ${duration} minutes.` });
+      return interaction.reply({ content: `${member.displayName} take ${duration} minutes to think about what you have done` });
     } catch (error) {
       return interaction.reply({ content: "Failed to timeout the member.", ephemeral: true });
     }
