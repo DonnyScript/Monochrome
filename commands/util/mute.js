@@ -3,7 +3,7 @@ const { PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('Shhh')
+    .setName('shhh')
     .setDescription("You can't do this, dont even")
     .addStringOption(option =>
       option.setName('target')
